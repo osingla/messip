@@ -1,0 +1,87 @@
+<html>
+
+    <head>
+
+        <style>
+
+        </style>
+
+		<![CDATA[
+        require(["dojo/dom", "dojo/on", "dojo/parser", "dojo/ready", "dojo/query", "dijit/registry", "dijit/form/Button", "dijit/layout/BorderContainer", 
+        "dijit/layout/ContentPane", "dijit/Tooltip", "dijit/layout/TabContainer", "dojo/domReady!", "dijit/form/FilteringSelect", 
+        "dojox/form/CheckedMultiSelect", "dijit/form/DropDownButton", "dijit/form/TextBox", "dijit/form/Button", "dijit/form/ToggleButton", "dijit/form/ComboButton",
+        "dijit/Dialog", "dojo/dom-style", "dijit/Fieldset", "dijit/form/RadioButton", "dijit/form/ComboBox", "dijit/form/Select"]
+        );
+        ]]>
+        
+    </head>
+
+    <body>
+
+		This program is provided only as source form. <br>
+		It is written in C (not C++). <br>
+		It should compile w/o problem on any Linux Distribution and FreeBSD.<br>
+		<br>
+		To download the source, use svn:
+		<span style="line-height: 200%"></span>
+		<div style="font-size: large; font-family: monospace; background-color: #e0e0e0" >
+			svn co https://svn.code.sf.net/p/messip/code
+		</div>
+
+		<br>
+		To compile the application, just follow these steps:
+		<span style="line-height: 200%"></span>
+		<div style="font-size: large; font-family: monospace; background-color: #e0e0e0" >
+			cd code/messip-lib/Debug/ <br>
+			make <br>
+			cd ../../messip-mgr/Debug/ <br>
+			make <br>
+			cd ../../example-1/Debug <br>
+			make <br>
+			cd ../../messip-mgr/Debug/ ; ./messip_mgr
+		</div>
+
+		<br>
+		To run an example, just follow these steps:
+		<span style="line-height: 200%"></span>
+		<ul>
+			<li>
+				On one shell, start the messip manager (do this only once) <br>
+				<div style="font-size: large; font-family: monospace; background-color: #e0e0e0" >
+					cd ../../messip-mgr/Debug/ ; ./messip_mgr
+				</div>
+			</li>
+			<br>
+			<li>
+				On a 2nd shell, start the first example (running as the server) <br>
+				<div style="font-size: large; font-family: monospace; background-color: #e0e0e0" >
+					cd ../../example-1/Debug/ ; LD_LIBRARY_PATH=../../messip-lib/Debug ./p server
+				</div>
+			</li>
+			<br>
+			<li>
+				On a 2nd shell, start the first example (running as the client) <br>
+				<div style="font-size: large; font-family: monospace; background-color: #e0e0e0" >
+					cd ../../example-1/Debug/ ; LD_LIBRARY_PATH=../../messip-lib/Debug ./p client
+				</div>
+			</li>
+		</ul>
+
+		<br>
+		<br>
+		<hr>
+		<br>
+
+		<div align="center" style="font-size: large" >
+			<a href="https://sourceforge.net/p/messip/code/HEAD/tree/trunk/" target="_blank">Browse the files</a>
+			<br>
+			<br>
+			<a href="http://messip.sourceforge.net/Doc/html/index.html" target="_blank">Browse the code (doxygen generated documentation)</a>
+			<br>
+			<br>
+			<a href="https://sourceforge.net/projects/messip/files/stats/timeline?dates=2001-06-05+to+2014-12-12" target="_blank">Show Download Statistics</a>
+		</div>
+		
+    </body>
+
+</html>

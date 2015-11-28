@@ -1,0 +1,788 @@
+<html>
+
+    <head>
+
+        <style>
+
+        </style>
+
+		<![CDATA[
+        require(["dojo/dom", "dojo/on", "dojo/parser", "dojo/ready", "dojo/query", "dijit/registry", "dijit/form/Button", "dijit/layout/BorderContainer", 
+        "dijit/layout/ContentPane", "dijit/Tooltip", "dijit/layout/TabContainer", "dojo/domReady!", "dijit/form/FilteringSelect", 
+        "dojox/form/CheckedMultiSelect", "dijit/form/DropDownButton", "dijit/form/TextBox", "dijit/form/Button", "dijit/form/ToggleButton", "dijit/form/ComboButton",
+        "dijit/Dialog", "dojo/dom-style", "dijit/Fieldset", "dijit/form/RadioButton", "dijit/form/ComboBox", "dijit/form/Select"]
+        );
+        ]]>
+        
+    </head>
+
+    <body>
+
+	 <table class="MsoNormalTable" style="font-family: 'Times New Roman';
+letter-spacing: normal; orphans: auto; text-indent: 0px;
+text-transform: none; widows: auto; word-spacing: 0px;
+-webkit-text-stroke-width: 0px; margin-left: 36pt;
+border-collapse: collapse; background-color: rgb(204, 204, 204);"
+cellpadding="0" cellspacing="0" border="0">
+<tbody>
+<tr>
+<td style="width: 122.2pt; border: 1pt solid windowtext;
+padding: 0cm 5.4pt; background: 0% 50% scroll rgb(179, 179,
+179);" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><b><span style="font-size: 11pt; font-family:
+Helvetica;">Function<o:p></o:p></span></b></p>
+</td>
+<td style="width: 69.05pt; border-style: solid solid solid
+none; border-top-color: windowtext; border-right-color:
+windowtext; border-bottom-color: windowtext;
+border-top-width: 1pt; border-right-width: 1pt;
+border-bottom-width: 1pt; padding: 0cm 5.4pt; background: 0%
+50% scroll rgb(179, 179, 179);" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext; text-align: center;" align="center"><b><span
+style="font-size: 11pt; font-family: Helvetica;">Type<o:p></o:p></span></b></p>
+</td>
+<td style="width: 282.15pt; border-style: solid solid solid
+none; border-top-color: windowtext; border-right-color:
+windowtext; border-bottom-color: windowtext;
+border-top-width: 1pt; border-right-width: 1pt;
+border-bottom-width: 1pt; padding: 0cm 5.4pt; background: 0%
+50% scroll rgb(179, 179, 179);" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><b><span style="font-size: 11pt; font-family:
+Helvetica;">Prototype<o:p></o:p></span></b></p>
+</td>
+<td style="border-style: solid solid solid none;
+border-top-color: windowtext; border-right-color:
+windowtext; border-bottom-color: windowtext;
+border-top-width: 1pt; border-right-width: 1pt;
+border-bottom-width: 1pt; padding: 0cm 5.4pt; background: 0%
+50% scroll rgb(179, 179, 179);">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><b><span style="font-size: 11pt; font-family:
+Helvetica;">Description<o:p></o:p></span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_init</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Server and Client</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">void messip_init( void );</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Library initializations</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_connect</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Server and Client</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">messip_cnx_t *<br>
+messip_connect(char *mgr_ref, messip_it_t id, int
+msec_timeout)</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Connection to the messip manager
+(messip_mgr)</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_disconnect</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Server and Client</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_disconnect( messip_cnx_t *cnx, long msec_timeout)</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Disconnection from the messip manager
+(messip_mgr)</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_channel_create</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Server</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">messip_channel_t *<br>
+messip_channel_create( messip_cnx_t *cnx,<br>
+&nbsp;&nbsp;&nbsp; const char *name, long msec_timeout,<br>
+&nbsp;&nbsp;&nbsp; int maxnb_msg_buffered )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Create a channel when clients will be able
+to send messages over.</span><span style="font-size:
+10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_channel_delete</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Server</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_channel_delete( messip_channel_t *ch,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Delete a channel that was previously
+created. Only channel without active cconnection can be
+successfully deleted.</span><span style="font-size:
+10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_channel_connect</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Client</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">messip_channel_t *<br>
+messip_channel_connect( messip_cnx_t *cnx,<span
+class="Apple-converted-space">&nbsp;</span><br>
+&nbsp;&nbsp;&nbsp; const char *name,&nbsp; long
+msec_timeout )</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Enable a client to connect to the channel
+owned by a server, in order to send messages.</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_channel_disconnect</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Client</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_channel_disconnect( messip_channel_t *ch,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Enable a client to disconnect from a
+channel.</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_ ping</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Client</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_ ping( messip_channel_t *ch,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Ping the server to check if he can currently
+process messages.</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_receive</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">server</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 7.5pt; font-family:
+Helvetica;">int<br>
+messip_receive( messip_channel_t *ch,<br>
+&nbsp;&nbsp;&nbsp; int32_t *type, void *buffer, int
+maxlen,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Enable a server to receive messages:<br>
+- Synchronous<br>
+- Asynchronous<br>
+- Timer<br>
+- Disconnection of a client<br>
+- Death of a client</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_reply</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">server</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_reply( messip_channel_t *ch, int index,<br>
+&nbsp;&nbsp;&nbsp; int32_t answer, void *reply_buffer,
+int reply_len,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Enable a server to reply to a client. Note
+that until the server has replied to the client, the
+client is blocked, unless the client has specified a
+timeout.</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_send</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">client</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_send( messip_channel_t *ch,<span
+class="Apple-converted-space">&nbsp;</span><br>
+&nbsp;&nbsp;&nbsp; int32_t type, void *send_buffer, int
+send_len,<br>
+&nbsp;&nbsp;&nbsp; int32_t *answer, void *reply_buffer,
+int reply_maxlen,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Enable a client to send a Synchronous
+Message to a server.&nbsp; The client will be blocked
+until the server has replied.</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_buffered_send</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">client</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_buffered_send( messip_channel_t *ch,<span
+class="Apple-converted-space">&nbsp;</span><br>
+&nbsp;&nbsp;&nbsp; int32_t type, void *send_buffer, int
+send_len,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Enable a client to send an Asynchronous
+Message to a server.&nbsp; The server will buffer these
+messages, until the maximum number of buffered messages
+is reached. There is no reply from the server, therefore
+the client does not wait, unless the maximum number of
+buffered messages is&nbsp; reached.</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_timer_create</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">server</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">timer_t<br>
+messip_timer_create( messip_channel_t *ch,<span
+class="Apple-converted-space">&nbsp;</span><br>
+&nbsp;&nbsp;&nbsp; int32_t type, long msec_1st_shot,
+long msec_rep_shot,<br>
+&nbsp;&nbsp;&nbsp; long msec_timeout )</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Arm a timer, either one-shot or repetitive.
+Note that a new thread is created into the client
+process when the time is triggered.</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+<tr>
+<td style="width: 122.2pt; border-style: none solid solid;
+border-right-color: windowtext; border-bottom-color:
+windowtext; border-left-color: windowtext;
+border-right-width: 1pt; border-bottom-width: 1pt;
+border-left-width: 1pt; padding: 0cm 5.4pt;" width="163">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;"><a
+href="http://messip.sourceforge.net/messip/Doc/html/"
+target="_blank" style="color: purple; text-decoration:
+underline;">messip_timer_delete</a></span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 69.05pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" width="92">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">server</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="width: 282.15pt; border-style: none solid solid
+none; border-bottom-color: windowtext; border-bottom-width:
+1pt; border-right-color: windowtext; border-right-width:
+1pt; padding: 0cm 5.4pt;" valign="top" width="376">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">int<br>
+messip_timer_delete( messip_channel_t *ch, timer_t
+timer_id )</span><span style="font-size: 10pt;
+font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+<td style="border-style: none solid solid none;
+border-bottom-color: windowtext; border-bottom-width: 1pt;
+border-right-color: windowtext; border-right-width: 1pt;
+padding: 0cm 5.4pt;" valign="top">
+<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt;
+font-size: 12pt; font-family: 'Times New Roman'; color:
+windowtext;"><span style="font-size: 9pt; font-family:
+Helvetica;">Delete a timer previously created.</span><span
+style="font-size: 10pt; font-family: Helvetica;"><o:p></o:p></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+		
+    </body>
+
+</html>

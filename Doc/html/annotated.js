@@ -1,0 +1,26 @@
+var annotated =
+[
+    [ "list_connect_s", "structlist__connect__s.html", "structlist__connect__s" ],
+    [ "messip_channel_t", "structmessip__channel__t.html", "structmessip__channel__t" ],
+    [ "messip_cnx", "structmessip__cnx.html", "structmessip__cnx" ],
+    [ "messip_datareply_t", "structmessip__datareply__t.html", "structmessip__datareply__t" ],
+    [ "messip_datasend_t", "structmessip__datasend__t.html", "structmessip__datasend__t" ],
+    [ "messip_mgr", "structmessip__mgr.html", "structmessip__mgr" ],
+    [ "messip_reply_buffered_send_t", "structmessip__reply__buffered__send__t.html", "structmessip__reply__buffered__send__t" ],
+    [ "messip_reply_channel_connect_t", "structmessip__reply__channel__connect__t.html", "structmessip__reply__channel__connect__t" ],
+    [ "messip_reply_channel_create_t", "structmessip__reply__channel__create__t.html", "structmessip__reply__channel__create__t" ],
+    [ "messip_reply_channel_delete_t", "structmessip__reply__channel__delete__t.html", "structmessip__reply__channel__delete__t" ],
+    [ "messip_reply_channel_disconnect_t", "structmessip__reply__channel__disconnect__t.html", "structmessip__reply__channel__disconnect__t" ],
+    [ "messip_reply_channel_ping_t", "structmessip__reply__channel__ping__t.html", "structmessip__reply__channel__ping__t" ],
+    [ "messip_reply_connect_t", "structmessip__reply__connect__t.html", "structmessip__reply__connect__t" ],
+    [ "messip_reply_death_notify_t", "structmessip__reply__death__notify__t.html", "structmessip__reply__death__notify__t" ],
+    [ "messip_send_buffered_send_t", "structmessip__send__buffered__send__t.html", "structmessip__send__buffered__send__t" ],
+    [ "messip_send_channel_connect_t", "structmessip__send__channel__connect__t.html", "structmessip__send__channel__connect__t" ],
+    [ "messip_send_channel_create_t", "structmessip__send__channel__create__t.html", "structmessip__send__channel__create__t" ],
+    [ "messip_send_channel_delete_t", "structmessip__send__channel__delete__t.html", "structmessip__send__channel__delete__t" ],
+    [ "messip_send_channel_disconnect_t", "structmessip__send__channel__disconnect__t.html", "structmessip__send__channel__disconnect__t" ],
+    [ "messip_send_channel_ping_t", "structmessip__send__channel__ping__t.html", "structmessip__send__channel__ping__t" ],
+    [ "messip_send_connect_t", "structmessip__send__connect__t.html", "structmessip__send__connect__t" ],
+    [ "messip_send_death_notify_t", "structmessip__send__death__notify__t.html", "structmessip__send__death__notify__t" ],
+    [ "messip_timer_s", "structmessip__timer__s.html", "structmessip__timer__s" ]
+];

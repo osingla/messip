@@ -1,0 +1,7 @@
+<map id="messip_receive" name="messip_receive">
+<area shape="rect" id="node2" href="$messip__lib_8c.html#a8e0c7af14fef64773d8e73bebaaf84de" title="TBD. " alt="" coords="375,53,463,79"/>
+<area shape="rect" id="node3" href="$messip__lib_8c.html#a790e4d123ed1023b875c93fad3c64b04" title="Read data into multiple buffers from a TCP socket. " alt="" coords="191,29,294,55"/>
+<area shape="rect" id="node4" href="$messip__lib_8c.html#a9e7e65d9ae760bff4c625967cc461aa3" title="TBD. " alt="" coords="202,79,283,106"/>
+<area shape="rect" id="node6" href="$messip__lib_8c.html#ab8f5aa7fd1719aa9d27b016e5ca8176e" title="TBD. " alt="" coords="168,131,317,172"/>
+<area shape="rect" id="node5" href="$messip__lib_8c.html#a07514d673b2ed37945049eb5b1fd041b" title="Write data from multiple buffers over a TCP socket. " alt="" coords="365,107,472,134"/>
+</map>

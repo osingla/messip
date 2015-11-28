@@ -1,0 +1,118 @@
+<html>
+
+    <head>
+
+        <style>
+
+        </style>
+
+		<![CDATA[
+        require(["dojo/dom", "dojo/on", "dojo/parser", "dojo/ready", "dojo/query", "dijit/registry", "dijit/form/Button", "dijit/layout/BorderContainer", 
+        "dijit/layout/ContentPane", "dijit/Tooltip", "dijit/layout/TabContainer", "dojo/domReady!", "dijit/form/FilteringSelect", 
+        "dojox/form/CheckedMultiSelect", "dijit/form/DropDownButton", "dijit/form/TextBox", "dijit/form/Button", "dijit/form/ToggleButton", "dijit/form/ComboButton",
+        "dijit/Dialog", "dojo/dom-style", "dijit/Fieldset", "dijit/form/RadioButton", "dijit/form/ComboBox", "dijit/form/Select"]
+        );
+        ]]>
+        
+    </head>
+
+    <body>
+
+		This is a very simple example, with 2 processes:
+		<ul>
+			<li>the 1st process create a named channel, in order to receive messages, then wait messages (with a 30 seconds timeout);</li>
+			<li>the 2nd process send two Synchronous Messages over this channel (i.e. to the 1st process).</li>
+		</ul>
+	
+		<br>
+		<br>
+		
+		<table>
+			<tr>
+				<td>
+					<div id="id_server" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Server', toggleable: false"" style="white-space: nowrap; font-size: medium; font-family: monospace" >
+                        // This is the server <br>
+                        <br>
+                        #include &lt;stdio.h> <br>
+                        #include &lt;stdlib.h> <br>
+                        #include &lt;assert.h> <br>
+                        <br>
+                        #include "messip.h" <br>
+                        <br>
+                        int <br>
+                        main( int argc, char *argv[] ) { <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_cnx_t      *cnx; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_channel_t  *ch; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;int32_t           type; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;int               index; <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// Connexion to the messip manager (use of /etc/messip) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_init(); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if ( !(cnx = messip_connect( NULL, "p1", MESSIP_NOTIMEOUT )) ) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1; <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// Create a channel, in order to receive messages on it <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ch = messip_channel_create( cnx, “one” , MESSIP_NOTIMEOUT, 0 ); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;assert( ch != NULL ); <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// Receive messages <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;for (;;) { <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = messip_receive( ch, <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&type, rec_buff, sizeof(rec_buff),  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;30000 );    // 30 seconds timeout <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (index == MESSIP_MSG_TIMEOUT) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messip_reply( ch, index, "Bonjour", 8 ); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;} <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return 0; <br>
+                        } <br>
+					</div>
+				</td>
+				<td>
+					<div id="id_client" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Client', toggleable: false"" style="white-space: nowrap; font-size: medium; font-family: monospace" >
+                        // This is the client <br>
+                        <br>
+                        #include &lt;stdio.h> <br>
+                        #include &lt;stdlib.h> <br>
+                        #include &lt;assert.h> <br>
+                        <br>
+                        #include "messip.h" <br>
+                        <br>
+                        int <br>
+                        main( int argc, char *argv[] ) { <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_cnx_t      *cnx; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_channel_t  *ch; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;char              rec_buff[80]; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;int32_t           answer; <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// Connexion to the messip manager (use of /etc/messip) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_init(); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if ( !(cnx = messip_connect( NULL, "p2", MESSIP_NOTIMEOUT )) ) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1; <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// Locate the channel where to send message to <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ch = messip_channel_connect( cnx, “one”, MESSIP_NOTIMEOUT ); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;assert( ch != NULL ); <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// Send two messages <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_send( ch,  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100, "Un", 3,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Type=100 <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&answer, rec_buff, sizeof( rec_buff ),  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5000 );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 5 seconds timeout <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;messip_send( ch,  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1000, "Deux", 4,&nbsp;&nbsp;&nbsp;// Type=1000 <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&answer, rec_buff, sizeof( rec_buff ),  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;000 );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 5 seconds timeout <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return 0; <br>
+                        } <br>
+					</div>
+				</td>
+			</tr>
+
+    </body>
+
+</html>

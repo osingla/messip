@@ -1,0 +1,89 @@
+<html>
+
+    <head>
+
+        <style>
+
+        </style>
+
+		<![CDATA[
+        require(["dojo/dom", "dojo/on", "dojo/parser", "dojo/ready", "dojo/query", "dijit/registry", "dijit/form/Button", "dijit/layout/BorderContainer", 
+        "dijit/layout/ContentPane", "dijit/Tooltip", "dijit/layout/TabContainer", "dojo/domReady!", "dijit/form/FilteringSelect", 
+        "dojox/form/CheckedMultiSelect", "dijit/form/DropDownButton", "dijit/form/TextBox", "dijit/form/Button", "dijit/form/ToggleButton", "dijit/form/ComboButton",
+        "dijit/Dialog", "dojo/dom-style", "dijit/Fieldset", "dijit/form/RadioButton", "dijit/form/ComboBox", "dijit/form/Select"]
+        );
+        ]]>
+        
+    </head>
+
+    <body>
+
+		Message Passing consist in the exchange of bytes from one task (Process or Thread) to another (Process or Thread), 
+		whatever if these tasks are on the same node or on another node over a TCP/IP network. <br>
+ 		<br>
+		The task sending the message is known as the client and the task receiving the message is known as the server. 
+		In theory, clients and servers do not need a third agent to communicate between themselves, at least for Synchronous Messages 
+		(e.g. messages that do not require to be buffered). 
+		In practice, to initiate the communication between clients and servers, it’s necessary to have a third task, 
+		which is called ‘messip-mgr’ (the messip manager). 
+		Only one ‘messip_mgr’ is necessary on a given network. Further versions of messip will enable to have several redundant managers. <br>
+ 		<br>
+		A library (shared) provides the messip API functions that enable to talk to either the messip manager or to the other tasks 
+		(either clients or servers). <br>
+ 		<br>
+		Each process which wants to use Message Passing must first connect to the messip manager, 
+		using the next API function: messip_connect. If no IP address and no port is specified 
+		(preferred method), then a text file /etc/messip is used. If this file does not exist, then the default IP name ‘localhost’ is used, 
+		and the default port 9000 is used. <br>
+ 		<br>
+		In order to receive messages, a server must first create a channel (see API function: 
+		messip_channel_create). A channel is identified by a name, which must be unique over the whole network. 
+		It’s perfectly fine to create several channels for a given process, but because you can receive messages on one specific channel 
+		and this operation is (usually) blocking (i.e. you’ll usually wait until you get a message over this channel), 
+		in practice a thread will create and manage only a channel at a time. 
+		In the future, it will be possible to receive messages on several channels at the same time. Note that you could poll, 
+		but it’s often not very efficient. <br>
+ 		<br>
+		Prior to send any message to a server (whatever it is a Synchronous or an Asynchronous Message), 
+		a client must find the channel. That means that the server must know the name that identifies the channel. 
+		In order to be able to further communicate with the server, that’s the only information that the client must know about the server. 
+		The API function to be used is: messip_channel_connect. <br>
+ 		<br>
+		Both API functions messip_channel_create and messip_channel_connect involve communication with the messip manager (messip-mgr). <br>
+ 		<br>
+		A server typically waits for incoming messages, using the next API function: messip_receive. 
+		This is normally a blocking function (but you can specify a timeout value), 
+		that means that you exit from this function on these events: 
+		<ul>
+			<li>a message has been received (either Synchronous or Asynchronous): each Synchronous message has to be replied, 
+			    unless you want to keep the client blocked and waiting for an answer.</li>
+			<li>timeout has occurred</li>
+			<li>a timer has expired</li>
+			<li>a client which was connected has either died or closed the connection to the channel.</li>
+		</ul>
+ 		<br>
+ 		A client sends either Synchronous or Asynchronous Messages:
+ 		<ul>
+			<li>
+				a <b>Synchronous Message</b> is <b>blocking</b>: <br>
+				that means the client will <b>wait until the message is received</b> by the server and processed. <br> 
+				The server has to reply to the client in order for the client to be unblocked. Note that you can specify a timeout. <br> 
+				Synchronous Messaging do not involve the Messip manager (messip_server agent), only the server and the client talk together. <br> 
+				Sending a Synchronous message is performed with the next API function: messip_send <br>
+			</li>
+			<br>
+			<li>
+				an <b>Asynchronous Message</b> is <b>non blocking</b>: <br> 
+				That means that a client can ignore the state of the server. <br> 
+				Because of this, there is no reply from the server. <br>
+				Therefore, you can’t assume that the message has been received by the server. <br> 
+				When the server has created the channel (where he receive messages), 
+				he has specified a parameter which is the maximum number of messages that can be buffered. <br> 
+				Asynchronous Message are slower than Synchronous Message because they are copied twice: <br> 
+				from the client to the Messip manager, then from the Messip manager to the server.
+			</li>
+		</ul>
+
+    </body>
+
+</html>

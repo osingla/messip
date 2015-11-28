@@ -1,0 +1,14 @@
+<map id="messip_log" name="messip_log">
+<area shape="rect" id="node2" href="$messip__lib_8c.html#a9ac437e775acccf0807ff83ac2579078" title="Enable a client to send an Asynchronous Message to a server. " alt="" coords="158,5,311,32"/>
+<area shape="rect" id="node3" href="$messip__lib_8c.html#a51f8e82b381e5d92cd897d13feb57fed" title="Enables a client to connect to a channel owned by a server. " alt="" coords="150,56,319,83"/>
+<area shape="rect" id="node4" href="$messip__lib_8c.html#a4192a5932ea30d7c1da718c3b53912b2" title="Enables a server to create a channel. " alt="" coords="155,107,314,133"/>
+<area shape="rect" id="node5" href="$messip__lib_8c.html#ae7b03e2405b5aa5799b76000b0ff18a6" title="Enables a server to delete a channel that was previously created by messip_channel_create() ..." alt="" coords="155,157,314,184"/>
+<area shape="rect" id="node6" href="$messip__lib_8c.html#aea97071c4ab85d96e3587b79d6f837d4" title="Enables a client to disconnect from a channel owned by a server. " alt="" coords="141,208,328,235"/>
+<area shape="rect" id="node7" href="$messip__lib_8c.html#a27f7c54cd0c8698c05109723a49c38a7" title="TBD. " alt="" coords="161,259,308,285"/>
+<area shape="rect" id="node8" href="$messip__lib_8c.html#ac1c01159db109288f8eb84f07d103b29" title="TBD. " alt="" coords="163,309,306,336"/>
+<area shape="rect" id="node9" href="$messip__lib_8c.html#a1abd2104539b3d7c0d9aa11b66834eda" title="Enables a server to receive messages sent on a channel owned by this server. " alt="" coords="377,461,490,488"/>
+<area shape="rect" id="node10" href="$messip__lib_8c.html#a635aaeab5753fccd15477500e4a3c544" title="Enables a server to reply to a client that has sent a messages to a channel owned by this server The ..." alt="" coords="185,411,284,437"/>
+<area shape="rect" id="node11" href="$messip__lib_8c.html#a8026a6805b6e9a22375cbbaedc7b4082" title="Enables a client to send a synchronous message to a channel owned by a server. " alt="" coords="185,461,284,488"/>
+<area shape="rect" id="node12" href="$messip__lib_8c.html#a42ee0fc796eb0724d701614725ead01c" title="TBD. " alt="" coords="167,512,302,539"/>
+<area shape="rect" id="node13" href="$messip__lib_8c.html#a9e7e65d9ae760bff4c625967cc461aa3" title="TBD. " alt="" coords="194,563,275,589"/>
+</map>

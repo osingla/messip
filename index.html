@@ -1,1 +1,140 @@
-test
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+    <head>
+        <meta name="generator" content="Bluefish 2.2.3" />
+        <meta charset="utf-8" />
+        <title>
+            MESSIP
+        </title>
+        <link rel="stylesheet" href="messip.css" media="screen" type="text/css" />
+        <link rel="stylesheet" href="messip2.css" media="screen" type="text/css" />
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.0/dijit/themes/claro/claro.css" media="screen">
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.10.0/dojox/form/resources/CheckedMultiSelect.css" media="screen">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.10.0/dojo/dojo.js" data-dojo-config="isDebug: true, async: false, parseOnLoad: true"></script>
+
+		<![CDATA[
+        require(["dojo/dom", "dojo/on", "dojo/parser", "dojo/ready", "dojo/query", "dijit/registry", "dijit/form/Button", "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+        "dijit/Tooltip", "dijit/layout/TabContainer", "dijit/form/TimeTextBox", "dojo/domReady!", "dijit/form/FilteringSelect", "dojox/form/CheckedMultiSelect",
+        "dijit/form/DropDownButton", "dijit/form/TextBox", "dijit/TooltipDialog", "dijit/form/Button", "dijit/form/ToggleButton", "dijit/form/ComboButton",
+        "dijit/Dialog", "dojo/fx/Toggler", "dojo/dom-style", "dojox/encoding"
+        "dijit/form/ValidationTextBox", "dijit/TitlePane", "dijit/form/RadioButton", "dojox/validate/regexp", "dijit/form/ComboBox", "dijit/form/Select"]
+        );
+        ]]>
+        
+    </head>
+    
+    <body class="claro">
+    
+        <div id="appLayout" class="demoLayout" data-dojo-type="dijit/layout/BorderContainer" 
+          data-dojo-props="design:'headline', gutters:true, liveSplitters:true" style="margin: 0px auto;" >
+        
+            <div class="edgePanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'">
+                <div style="margin: 'auto'" align="center">
+                    <big><b>MESSIP</b></big>
+                </div>
+            </div>
+            <div class="edgePanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"
+            style="width: 100px;">
+
+                <div id='tab_container' data-dojo-type="dijit/layout/TabContainer" tabposition="top" tabstrip="true" >
+                
+           			<!-- Introduction -->
+                    <div selected=true id='content_pane_intro' data-dojo-type="dijit/layout/ContentPane" title="Introduction" 
+                      tooltip='MessIP Introduction'>
+						<div id="div_intro" data-dojo-type="dijit/layout/ContentPane" href="intro.html">
+						</div>
+                    </div>
+
+           			<!-- Concepts -->
+                    <div selected=true id='content_pane_concepts' data-dojo-type="dijit/layout/ContentPane" title="Concepts" 
+                      tooltip='MessIP Concepts'>
+						<div id="div_concepts" data-dojo-type="dijit/layout/ContentPane" href="concepts.html">
+						</div>
+                    </div>
+
+           			<!-- A simple example -->
+                    <div selected=true id='content_pane_simple_example' data-dojo-type="dijit/layout/ContentPane" title="Simple Example" 
+                      tooltip='A simple example, to show how to use MessIP'>
+						<div id="div_simple_example" data-dojo-type="dijit/layout/ContentPane" href="simple_example.html">
+						</div>
+                    </div>
+
+           			<!-- Implementation Notes -->
+                    <div id='content_pane_implementation' data-dojo-type="dijit/layout/ContentPane" title="Implementation Notes" 
+                      tooltip='Implementation Notes'>          
+						<div id="div_implementation" data-dojo-type="dijit/layout/ContentPane" href="implementation.html">
+						</div>
+                    </div>
+
+           			<!-- Performances -->
+                    <div id='content_pane_performances' data-dojo-type="dijit/layout/ContentPane" title="Performances" 
+                      tooltip='Performances'>          
+						<div id="div_performances" data-dojo-type="dijit/layout/ContentPane" href="performances.html">
+						</div>
+                    </div>
+
+           			<!-- API Documentation -->
+                    <div id='content_pane_api_doc' data-dojo-type="dijit/layout/ContentPane" title="API Documentation" 
+                      tooltip='API Documentation'>          
+						<div id="div_api_doc" data-dojo-type="dijit/layout/ContentPane" href="api_doc.html">
+						</div>
+                    </div>
+
+           			<!-- Download -->
+                    <div id='content_pane_download' data-dojo-type="dijit/layout/ContentPane" title="Download, Files, Stats" 
+                      tooltip='Download, Files, Stats'>          
+						<div id="div_download" data-dojo-type="dijit/layout/ContentPane" href="download.html">
+						</div>
+                    </div>
+
+           			<!-- Licensing -->
+                    <div id='content_pane_licensing' data-dojo-type="dijit/layout/ContentPane" title="Licensing" 
+                      tooltip='COUIJS licensing'>          
+						<div id="div_licensing" data-dojo-type="dijit/layout/ContentPane" href="licensing.html">
+						</div>
+                    </div>
+
+           			<!-- Contact Information -->
+                    <div id='content_contact_information' data-dojo-type="dijit/layout/ContentPane" title="Contact Information" 
+                      tooltip='microSD content'>          
+						<div id="div_contact_information" data-dojo-type="dijit/layout/ContentPane" href="contact.html">
+						</div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="edgePanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter: false, region: 'bottom'">
+
+	            <table style="margin: 'auto'; width: 100%;" align="left" vertical-align="middle" border="0" cellpadding="2">
+				
+					<tr style="vertical-align="middle" > 						
+                    	<td style="text-align: center">
+							<span id='msg_cnx'>
+
+<!-- hitwebcounter Code START -->
+<a href="http://www.hitwebcounter.com/" target="_blank">
+<img src="http://hitwebcounter.com/counter/counter.php?page=6084516&style=0005&nbdigits=5&type=page&initCount=0" title="my widget for counting" Alt="my widget for counting"   border="0" >
+</a><br/>
+<!-- hitwebcounter.com --><a href="http://www.hitwebcounter.com/counterresources.php" title="MyVisits Counter" 
+target="_blank" style="font-family: Arial, Helvetica, sans-serif; 
+font-size: 11px; color: #9C9E94; text-decoration: none ;"><strong>MyVisits Counter</strong>
+</a>   
+  
+</span>
+        		        </td>
+        		        
+					</tr>
+					
+				</table>
+                
+            </div>
+            
+        </div>
+            
+    </body>
+
+</html>

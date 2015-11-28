@@ -1,0 +1,12 @@
+<map id="messip_readv" name="messip_readv">
+<area shape="rect" id="node2" href="$messip__lib_8c.html#a9ac437e775acccf0807ff83ac2579078" title="Enable a client to send an Asynchronous Message to a server. " alt="" coords="174,5,327,32"/>
+<area shape="rect" id="node3" href="$messip__lib_8c.html#a51f8e82b381e5d92cd897d13feb57fed" title="Enables a client to connect to a channel owned by a server. " alt="" coords="166,56,335,83"/>
+<area shape="rect" id="node4" href="$messip__lib_8c.html#a4192a5932ea30d7c1da718c3b53912b2" title="Enables a server to create a channel. " alt="" coords="171,107,330,133"/>
+<area shape="rect" id="node5" href="$messip__lib_8c.html#ae7b03e2405b5aa5799b76000b0ff18a6" title="Enables a server to delete a channel that was previously created by messip_channel_create() ..." alt="" coords="171,157,330,184"/>
+<area shape="rect" id="node6" href="$messip__lib_8c.html#aea97071c4ab85d96e3587b79d6f837d4" title="Enables a client to disconnect from a channel owned by a server. " alt="" coords="157,208,344,235"/>
+<area shape="rect" id="node7" href="$messip__lib_8c.html#a27f7c54cd0c8698c05109723a49c38a7" title="TBD. " alt="" coords="177,259,324,285"/>
+<area shape="rect" id="node8" href="$messip__lib_8c.html#afccfea02f55e158e3f52779002839191" title="Connection to the messip manager (messip_mgr) " alt="" coords="192,309,309,336"/>
+<area shape="rect" id="node9" href="$messip__lib_8c.html#ac1c01159db109288f8eb84f07d103b29" title="TBD. " alt="" coords="179,360,322,387"/>
+<area shape="rect" id="node10" href="$messip__lib_8c.html#a1abd2104539b3d7c0d9aa11b66834eda" title="Enables a server to receive messages sent on a channel owned by this server. " alt="" coords="194,411,307,437"/>
+<area shape="rect" id="node11" href="$messip__lib_8c.html#a8026a6805b6e9a22375cbbaedc7b4082" title="Enables a client to send a synchronous message to a channel owned by a server. " alt="" coords="201,461,300,488"/>
+</map>
