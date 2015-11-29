@@ -1,4 +1,0 @@
-<map id="messip_timer_send" name="messip_timer_send">
-<area shape="rect" id="node2" href="$messip__lib_8c.html#a8e0c7af14fef64773d8e73bebaaf84de" title="TBD. " alt="" coords="199,5,287,32"/>
-<area shape="rect" id="node3" href="$messip__lib_8c.html#a07514d673b2ed37945049eb5b1fd041b" title="Write data from multiple buffers over a TCP socket. " alt="" coords="189,56,296,83"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="messip_connect" name="messip_connect">
-<area shape="rect" id="node2" href="$messip__lib_8c.html#a790e4d123ed1023b875c93fad3c64b04" title="Read data into multiple buffers from a TCP socket. " alt="" coords="181,5,283,32"/>
-<area shape="rect" id="node3" href="$messip__lib_8c.html#a07514d673b2ed37945049eb5b1fd041b" title="Write data from multiple buffers over a TCP socket. " alt="" coords="179,56,285,83"/>
-<area shape="rect" id="node4" href="$messip__utils_8c.html#a138470fa7b23c3936b9cf8038082f397" title="read_etc_messip" alt="" coords="171,107,293,133"/>
-</map>

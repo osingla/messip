@@ -32,9 +32,16 @@
           data-dojo-props="design:'headline', gutters:true, liveSplitters:true" style="margin: 0px auto;" >
         
             <div class="edgePanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'top'">
-                <div style="margin: 'auto'" align="center">
-                    <big><b>MESSIP</b></big>
-                </div>
+            	<table style="width:100%">
+                	<tr>
+                        <td valign="middle" align="center" style="width:100%"" >
+			                <b>MESSIP - Message-Passing over TCP/IP</b>
+                		</td>
+                        <td valign="middle" align="right" id='id_link_to_github_project'>
+                        	<a href="https://github.com/osingla/messip" target="_blank">Github&nbsp;Project</a>
+                		</td>
+                	</tr>
+                </table>
             </div>
             <div class="edgePanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'"
             style="width: 100px;">
@@ -84,8 +91,8 @@
                     </div>
 
            			<!-- Download -->
-                    <div id='content_pane_download' data-dojo-type="dijit/layout/ContentPane" title="Download, Files, Stats" 
-                      tooltip='Download, Files, Stats'>          
+                    <div id='content_pane_download' data-dojo-type="dijit/layout/ContentPane" title="Download" 
+                      tooltip='Download'>          
 						<div id="div_download" data-dojo-type="dijit/layout/ContentPane" href="download.html">
 						</div>
                     </div>
