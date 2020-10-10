@@ -3,7 +3,7 @@
 	<name>example-6</name>
 	<comment></comment>
 	<projects>
-		<project>messip-lib</project>
+		<project>lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

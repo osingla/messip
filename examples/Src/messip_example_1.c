@@ -10,13 +10,13 @@
  * Copyright (C) 2001-2007  Olivier Singla \n
  * http://messip.sourceforge.net/ \n\n
  * 
- * Server (p server):
+ * Server:
  * - connect to the messip manager
  * - create a channel ('one') to receive messages
  * - wait for a message (no timeout) ["Hello"]
  * - when received the message, reply back with another message ["Bonjour"]
  * 
- * Client p2 (p client):
+ * Client:
  * - connect to the messip manager
  * - locate the channel ('one') to send messages
  * - send a message (no timeout) ["Hello"]
@@ -33,6 +33,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/wait.h>
 
 #include "messip.h"
 
@@ -50,7 +51,7 @@ static int server( int argc, char *argv[] ) {
     /*
      * Connect to the messip server
      */
-    display( "Start process\n" );
+    display( "Server", "Start process\n" );
     messip_set_log_level( MESSIP_LOG_ERROR | MESSIP_LOG_WARNING
        | MESSIP_LOG_INFO /* | MESSIP_LOG_INFO_VERBOSE | MESSIP_LOG_DEBUG */  );
     messip_init(  );
@@ -69,7 +70,7 @@ static int server( int argc, char *argv[] ) {
     /*
      * Now wait for one message on this on channel
      */
-    display( "Server waiting 10 seconds - Sender (the client) should stay blocked...\n" );
+    display( "Server", "waiting 10 seconds - Sender (the client) should stay blocked...\n" );
     delay( 10000 );
     int32_t type;
     char rec_buff[80];
@@ -82,12 +83,12 @@ static int server( int argc, char *argv[] ) {
            __FILE__, __LINE__, "one", errno );
         return -1;
     }
-    display( "received %d-%d:'%s' type=%d from id=%s index=%d\n",
+    display( "Server", "received %d-%d:'%s' type=%d from id=%s index=%d\n",
        ch->datalen, ch->datalenr, rec_buff, type, ch->remote_id, index );
     assert( index >= 0 );
     assert( !strcmp( rec_buff, "Hello" ) );
     assert( type == 1961 );
-    display( "...waiting 10 seconds before replying to the client...\n" );
+    display( "Server", "...waiting 10 seconds before replying to the client...\n" );
     delay( 10000 );
     messip_reply( ch, index, 3005, "Bonjour", 8, MESSIP_NOTIMEOUT );
 
@@ -103,7 +104,7 @@ static int server( int argc, char *argv[] ) {
            __FILE__, __LINE__, "one", errno );
         return -1;
     }
-    display( "received %d-%d:'%s' type=%d from id=%s index=%d\n",
+    display( "Server", "received %d-%d:'%s' type=%d from id=%s index=%d\n",
        ch->datalen, ch->datalenr, rbuff, type, ch->remote_id, index );
     assert( index >= 0 );
     assert( type == 123 );
@@ -120,7 +121,7 @@ static int server( int argc, char *argv[] ) {
            __FILE__, __LINE__, "one", errno );
         return -1;
     }
-    display( "received %d-%d:'%s' type=%d from id=%s index=%d\n",
+    display( "Server", "received %d-%d:'%s' type=%d from id=%s index=%d\n",
        ch->datalen, ch->datalenr, rec_buff, type, ch->remote_id, index );
     assert( index == MESSIP_MSG_DISCONNECT || index == MESSIP_MSG_DISMISSED );
 
@@ -128,7 +129,7 @@ static int server( int argc, char *argv[] ) {
      * We just exit as
      * the MessIP manager will take care of releasing resources (channel)
      */
-    display( "End process\n" );
+    display( "Server", "End process\n" );
     return 0;
 }                               // server
 
@@ -145,7 +146,7 @@ static int client( int argc, char *argv[] ) {
     messip_set_log_level( MESSIP_LOG_ERROR | MESSIP_LOG_WARNING
        | MESSIP_LOG_INFO /* | MESSIP_LOG_INFO_VERBOSE | MESSIP_LOG_DEBUG */  );
     messip_init(  );
-    display( "start process\n" );
+    display( "Client", "start process\n" );
     messip_cnx_t *cnx = messip_connect( NULL, "ex1/p2", MESSIP_NOTIMEOUT );
     if ( !cnx )
         cancel( "Unable to find messip manager\n" );
@@ -154,10 +155,10 @@ static int client( int argc, char *argv[] ) {
     messip_channel_t *ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
     if ( !ch )
         cancel( "Unable to localize channel '%s'\n", "one" );
-    display( "Channel located - remote_id=%s\n", ch->remote_id );
+    display( "Client", "Channel located - remote_id=%s\n", ch->remote_id );
 
     /*--- Send a 1st message on channel 'one' ---*/
-    display( "sending now a 1st message to the server...\n" );
+    display( "Client", "sending now a 1st message to the server...\n" );
     int32_t answer;
     char rec_buff[80];
     int status = messip_send( ch,
@@ -168,15 +169,15 @@ static int client( int argc, char *argv[] ) {
         fprintf( stderr, "%s %d:\n\tError on send message #1 on channel '%s', errno=%d\n", __FILE__, __LINE__, "one", errno );
         return -1;
     }
-    display( "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n",
+    display( "Client", "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n",
        status, ch->datalen, ch->datalenr, rec_buff, answer, ch->remote_id );
     assert( answer == 3005 );
 
     /*--- Send a 2nd message on channel 'one' ---*/
-    display( "sending now a 2nd message to the server...\n" );
+    display( "Client", "sending now a 2nd message to the server...\n" );
     char *rbuff;
     status = messip_send( ch, 123, "Unix", 5, &answer, &rbuff, 0, MESSIP_NOTIMEOUT );
-    display( "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n",
+    display( "Client", "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n",
        status, ch->datalen, ch->datalenr, rbuff, answer, ch->remote_id );
     if ( status == -1 ) {
         fprintf( stderr, "%s %d:\n\tError on send message #2 on channel '%s', errno=%d\n", __FILE__, __LINE__, "one", errno );
@@ -187,17 +188,17 @@ static int client( int argc, char *argv[] ) {
 
     /*--- Then 2 ping messages ---*/
     delay( 3000 );
-    display( "Waiting for ping...\n" );
+    display( "Client", "Waiting for ping...\n" );
     status = messip_channel_ping( ch, 5000 );
-    display( "Status ping = %d\n", status );
+    display( "Client", "Status ping = %d\n", status );
     delay( 3000 );
-    display( "Waiting for ping...\n" );
+    display( "Client", "Waiting for ping...\n" );
     status = messip_channel_ping( ch, 5000 );
-    display( "Status ping = %d\n", status );
+    display( "Client", "Status ping = %d\n", status );
 
     /*--- Disconnect from this channel ---*/
     status = messip_channel_disconnect( ch, MESSIP_NOTIMEOUT );
-    display( "Status disconnect channel = %d\n", status );
+    display( "Client", "Status disconnect channel = %d\n", status );
 
     return 0;
 }                               // client

@@ -1,4 +1,4 @@
 
 all clean :
-	@make -C ../messip-lib/Debug $@
-	@make -C ../messip-mgr/Debug $@
+	@make -C ../lib/Debug $@
+	@make -C ../mgr/Debug $@

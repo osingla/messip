@@ -1,4 +1,4 @@
 
 all clean :
-	@make -C ../messip-lib/Release $@
-	@make -C ../messip-mgr/Release $@
+	@make -C ../lib/Release $@
+	@make -C ../mgr/Release $@

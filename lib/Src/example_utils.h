@@ -31,7 +31,7 @@ static void cancel( char *fmt, ... ) {
     exit( -1 );
 }                               // cancel
 
-static void display( char *fmt, ... ) {
+static void display( char const *mark, char *fmt, ... ) {
     if ( now0 == 0 )
         now0 = time( NULL );
     va_list ap;
@@ -40,21 +40,22 @@ static void display( char *fmt, ... ) {
     vsprintf( msg, fmt, ap );
     va_end( ap );
 
-    printf( "%3ld: %s", time( NULL ) - now0, msg );
+    printf( "%3ld: %s: %s", time( NULL ) - now0, mark, msg );
     fflush( stdout );
 }                               // display
 
 int exec_server_client( int argc, char *argv[], 
 	int (*pf_server)(int argc, char *argv[]), int (*pf_client)(int argc, char *argv[]) ) {
-	if ( (argc > 1) && !strcmp(argv[1], "server") )
-		return pf_server( argc, argv );
-	else if ( (argc > 1) && !strcmp(argv[1], "client") )
+    pid_t pid_client = fork();
+    if (pid_client == 0) {
 		return pf_client( argc, argv );
-	else {
-		printf( "%s server|client\n", argv[0] );
-		fflush( stdout );
-	}
-	return -1;
+    }
+    else {
+		int s = pf_server( argc, argv );
+        int wstatus;
+        waitpid(pid_client, &wstatus, 0);
+        return s;
+    }
 }								// exec_server_client
 
 int exec_server_client2( int argc, char *argv[], 
