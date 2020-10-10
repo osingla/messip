@@ -25,6 +25,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <getopt.h>
+#include <sys/wait.h>
 
 #include "messip.h"
 
@@ -42,28 +43,30 @@ static int server( int argc, char *argv[] ) {
 	/*
 		Connect to one messip server
 	*/
-	display( "Start process\n" );
+	display( "Server", "Start process\n" );
 	messip_init( );
     messip_cnx_t *cnx = messip_connect( NULL, "ex6/p1", MESSIP_NOTIMEOUT );
-    if ( !cnx ) 
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
 	/*
 		Create channel 'one'
 	*/
 	messip_channel_t *ch = messip_channel_create( cnx, "one", MESSIP_NOTIMEOUT, 0 );
-	if ( !ch ) 
+	if ( !ch ) {
 		cancel( "Unable to create channel '%s'\n", "one" );
+    }
 
 	/*
 		1st timer
 	*/
 	timer_t timer1 = messip_timer_create( ch, 1961, 5000, 30000, MESSIP_NOTIMEOUT );
-	display( "1st timer id=%d: type=%d - 1st shot in 5 sec, each 30 sec after that\n",
+	display( "Server", "1st timer id=%d: type=%d - 1st shot in 5 sec, each 30 sec after that\n",
 		timer1, 1961 );
 	delay( 10000 );
 	timer_t timer2 = messip_timer_create( ch, 1789, 20000, 10000, MESSIP_NOTIMEOUT );
-	display( "2nd timer id=%d: type=%d - 1st shot in 20 sec, each 10 sec after that\n",
+	display( "Server", "2nd timer id=%d: type=%d - 1st shot in 20 sec, each 10 sec after that\n",
 		timer2, 1789 );
 
 	/*
@@ -80,15 +83,15 @@ static int server( int argc, char *argv[] ) {
 			MESSIP_NOTIMEOUT );
 		assert(index != -1);
 		if (index == MESSIP_MSG_TIMER) {
-			display( "timer %4d type=%d from %s\n", 
+			display( "Server", "timer %4d type=%d from %s\n", 
 				cnt, type, ch->remote_id  );
 		}
 		else if ( (index == MESSIP_MSG_DISCONNECT) || (index == MESSIP_MSG_DISMISSED) ) {
-			display( "index=%d type=%d from id=%s\n", 
+			display( "Server", "index=%d type=%d from id=%s\n", 
 				index, type, ch->remote_id );
 		}
 		else {
-			display( "index=%d received '%s' type=%d from id=%s\n", 
+			display( "Server", "index=%d received '%s' type=%d from id=%s\n", 
 				index, rec_buff, type, ch->remote_id );
 			messip_reply( ch, index, 0, "ABCDEFGHI", 10, MESSIP_NOTIMEOUT );
 		}
@@ -109,18 +112,20 @@ static int client( int argc, char *argv[] ) {
 		Connect to one messip server
 	*/
 	messip_init( );
-	display( "start process\n" );
+	display( "Client", "start process\n" );
     messip_cnx_t *cnx = messip_connect( NULL, "ex1/p2", MESSIP_NOTIMEOUT );
-    if ( !cnx ) 
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
 	/*
 		Localize channel 'one'
 	*/
 	messip_channel_t *ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
-	if ( !ch ) 
+	if ( !ch ) {
 		cancel( "Unable to localize channel '%s'\n", "one" );
-	display( "Channel located - remote_id=%s\n", 
+    }
+	display( "Client", "Channel located - remote_id=%s\n", 
 		ch->remote_id );
 
 	/*
@@ -133,7 +138,7 @@ static int client( int argc, char *argv[] ) {
 		1, "Hello1", 7, 
 		&answer, rec_buff, sizeof(rec_buff), 
 		MESSIP_NOTIMEOUT );
-	display( "send status=%d received back='%s'  remote_id=%s\n", 
+	display( "Client", "send status=%d received back='%s'  remote_id=%s\n", 
 		status, rec_buff, 
 		ch->remote_id );	
 
@@ -145,7 +150,7 @@ static int client( int argc, char *argv[] ) {
 		3, "Hello2", 7, 
 		&answer, rec_buff, sizeof(rec_buff), 
 		MESSIP_NOTIMEOUT );
-	display( "send status=%d received back='%s'  remote_id=%s\n", 
+	display( "Client", "send status=%d received back='%s'  remote_id=%s\n", 
 		status, rec_buff, 
 		ch->remote_id );	
 
