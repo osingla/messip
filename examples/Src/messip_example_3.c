@@ -38,6 +38,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/wait.h>
 
 #include "messip.h"
 
@@ -59,15 +60,17 @@ static int server( int argc, char *argv[] ) {
 	display( "Server", "Start process\n" );
 	messip_init( );
     messip_cnx_t *cnx = messip_connect( NULL, "ex3/p1", MESSIP_NOTIMEOUT );
-    if ( !cnx ) 
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
 	/*
 		Create channel 'one'
 	*/
 	messip_channel_t *ch = messip_channel_create( cnx, "one", 5000, 0 );	// 5 seconds timeout
-	if ( !ch ) 
+	if ( !ch ) {
 		cancel( "Unable to create channel '%s'\n", "one" );
+    }
 
 	/*
 		Now wait for some messages this on channel
@@ -115,7 +118,6 @@ static int client( int argc, char *argv[] ) {
 	int					status;
 	char				rec_buff[80];
 	int32_t				answer;
-	int					index;
 
 	display( "Client", "Start process\n" );
 	messip_init( );
@@ -133,8 +135,9 @@ static int client( int argc, char *argv[] ) {
             break;
         sleep(1);
     }
-    if ( !ch )
+    if ( !ch ) {
         cancel( "Unable to localize channel '%s'\n", "one" );
+    }
 	display( "Client", "Channel located - remote_id=%s\n", 
 		ch->remote_id );
 
@@ -145,7 +148,7 @@ static int client( int argc, char *argv[] ) {
 			&answer, rec_buff, sizeof(rec_buff), 5000 );
 		display( "Client", "status=%d answer=%d '%s'\n", 
 			status, answer, rec_buff );	
-		if (index == MESSIP_MSG_TIMEOUT)
+		if (status == MESSIP_MSG_TIMEOUT)
 			continue;
 		break;
 	}

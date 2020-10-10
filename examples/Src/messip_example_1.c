@@ -56,16 +56,18 @@ static int server( int argc, char *argv[] ) {
        | MESSIP_LOG_INFO /* | MESSIP_LOG_INFO_VERBOSE | MESSIP_LOG_DEBUG */  );
     messip_init(  );
     messip_cnx_t *cnx = messip_connect( NULL, "ex1/p1", MESSIP_NOTIMEOUT );
-    if ( !cnx )
+    if ( !cnx ) {
         cancel( "Unable to find messip manager\n" );
+    }
 
     /*
      * Create channel 'one'
      * We'll receive messages on this channel
      */
     messip_channel_t *ch = messip_channel_create( cnx, "one", MESSIP_NOTIMEOUT, 0 );
-    if ( !ch )
+    if ( !ch ) {
         cancel( "Unable to create channel '%s'\n", "one" );
+    }
 
     /*
      * Now wait for one message on this on channel
@@ -148,8 +150,9 @@ static int client( int argc, char *argv[] ) {
     messip_init(  );
     display( "Client", "start process\n" );
     messip_cnx_t *cnx = messip_connect( NULL, "ex1/p2", MESSIP_NOTIMEOUT );
-    if ( !cnx )
+    if ( !cnx ) {
         cancel( "Unable to find messip manager\n" );
+    }
 
     /*--- Localize channel 'one' ---*/
     messip_channel_t *ch = NULL;

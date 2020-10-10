@@ -59,15 +59,17 @@ int server( int argc, char *argv[] ) {
     display( "Server", "start process\n" );
     messip_init(  );
     messip_cnx_t *cnx = messip_connect( NULL, "ex2/p1", MESSIP_NOTIMEOUT );
-    if ( !cnx )
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
     /*
      * Create channel 'one'
      */
     messip_channel_t *ch = messip_channel_create( cnx, "one", MESSIP_NOTIMEOUT, 0 );
-    if ( !ch )
-        cancel( "Unable to create channel '%s'\n", "one" );
+    if ( !ch ) {
+       cancel( "Unable to create channel '%s'\n", "one" );
+    }
 
     /*
      * Ask to be notified of the death of processes
