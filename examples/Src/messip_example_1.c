@@ -152,7 +152,13 @@ static int client( int argc, char *argv[] ) {
         cancel( "Unable to find messip manager\n" );
 
     /*--- Localize channel 'one' ---*/
-    messip_channel_t *ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
+    messip_channel_t *ch = NULL;
+    for (time_t t0 = time(NULL); time(NULL) - t0 < 10; ) {
+        ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
+        if (ch)
+            break;
+        sleep(1);
+    }
     if ( !ch )
         cancel( "Unable to localize channel '%s'\n", "one" );
     display( "Client", "Channel located - remote_id=%s\n", ch->remote_id );

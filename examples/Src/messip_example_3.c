@@ -56,7 +56,7 @@ static int server( int argc, char *argv[] ) {
 	int32_t				type;
 	int					index;
 
-	display( "Start process\n" );
+	display( "Server", "Start process\n" );
 	messip_init( );
     messip_cnx_t *cnx = messip_connect( NULL, "ex3/p1", MESSIP_NOTIMEOUT );
     if ( !cnx ) 
@@ -78,13 +78,13 @@ static int server( int argc, char *argv[] ) {
 			&type, rec_buff, sizeof(rec_buff), 
 			10000 );			// 10 seconds timeout
 		assert(index != -1);
-		display( "received %d%s '%s' type=%d index=%d\n", 
+		display( "Server", "received %d%s '%s' type=%d index=%d\n", 
 			index, 
 			(index == MESSIP_MSG_TIMEOUT) ? " (timeout)" : 
 				((index == MESSIP_MSG_DISMISSED) ? " (dismissed)" : ""),
 			rec_buff, type, index );
 		if (index == MESSIP_MSG_DISMISSED) {
-			display( "id %s dismissed\n", 
+			display( "Server", "id %s dismissed\n", 
 				ch->remote_id );
 			static int cpt = 0;
 			if ( ++cpt % 5 == 0 ) {
@@ -117,7 +117,7 @@ static int client( int argc, char *argv[] ) {
 	int32_t				answer;
 	int					index;
 
-	display( "Start process\n" );
+	display( "Client", "Start process\n" );
 	messip_init( );
     messip_cnx_t *cnx = messip_connect( NULL, "ex3/p2", MESSIP_NOTIMEOUT );
     if ( !cnx ) 
@@ -126,10 +126,16 @@ static int client( int argc, char *argv[] ) {
 	/*
 		Localize channel 'one'
 	*/
-	messip_channel_t *ch = messip_channel_connect( cnx, "one", 5000 );
-	if ( !ch ) 
-		cancel( "Unable to localize channel '%s'\n", "one" );
-	display( "Channel located - remote_id=%s\n", 
+    messip_channel_t *ch = NULL;
+    for (time_t t0 = time(NULL); time(NULL) - t0 < 10; ) {
+        ch = messip_channel_connect( cnx, "one", 5000 );
+        if (ch)
+            break;
+        sleep(1);
+    }
+    if ( !ch )
+        cancel( "Unable to localize channel '%s'\n", "one" );
+	display( "Client", "Channel located - remote_id=%s\n", 
 		ch->remote_id );
 
 	for (;;) {
@@ -137,7 +143,7 @@ static int client( int argc, char *argv[] ) {
 		status = messip_send( ch, 
 			123, "Hello", 6, 
 			&answer, rec_buff, sizeof(rec_buff), 5000 );
-		display( "status=%d answer=%d '%s'\n", 
+		display( "Client", "status=%d answer=%d '%s'\n", 
 			status, answer, rec_buff );	
 		if (index == MESSIP_MSG_TIMEOUT)
 			continue;

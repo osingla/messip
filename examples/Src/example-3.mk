@@ -1,7 +1,7 @@
 include ../common.mk
 
-OBJS = p.o 
-TARGET = p
+OBJS = messip_example_3.o 
+TARGET = messip-example-3
 LIBS = -L ../../lib/$(CONFIG_NAME) -l messip -l rt
 CFLAGS += -I ../../lib/Src
 CFLAGS += $(if $(filter 1 YES, $(DEBUG)), -g -O0, -g0 -O2)
