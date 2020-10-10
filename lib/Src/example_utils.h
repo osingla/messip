@@ -62,17 +62,26 @@ int exec_server_client2( int argc, char *argv[],
 	int (*pf_server)(int argc, char *argv[]), 
 	int (*pf_client1)(int argc, char *argv[]),
 	int (*pf_client2)(int argc, char *argv[]) ) {
-	if ( (argc > 1) && !strcmp(argv[1], "server") )
-		return pf_server( argc, argv );
-	else if ( (argc > 1) && !strcmp(argv[1], "client1") )
-		return pf_client1( argc, argv );
-	else if ( (argc > 1) && !strcmp(argv[1], "client2") )
-		return pf_client2( argc, argv );
-	else {
-		printf( "%s server|client1|client2\n", argv[0] );
-		fflush( stdout );
-	}
-	return -1;
+    pid_t pid_client1 = fork();
+    if (pid_client1 == 0) {
+		int s = pf_server( argc, argv );
+        int wstatus;
+        waitpid(pid_client1, &wstatus, 0);
+        return s;
+    }
+    else {
+        pid_t pid_client2 = fork();
+        if (pid_client2 == 0) {
+    		int s = pf_client1( argc, argv );
+            return s;
+        }
+        else {
+    		int s = pf_client2( argc, argv );
+            int wstatus;
+            waitpid(pid_client2, &wstatus, 0);
+            return s;
+        }
+    }
 }								// exec_server_client2
 
 #endif                         /*EXAMPLE_UTILS_H_ */

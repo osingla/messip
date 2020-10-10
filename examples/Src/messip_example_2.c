@@ -38,6 +38,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/wait.h>
 
 #include "messip.h"
 
@@ -55,7 +56,7 @@ int server( int argc, char *argv[] ) {
     /*
      * Connect to one messip server
      */
-    display( "start process\n" );
+    display( "Server", "start process\n" );
     messip_init(  );
     messip_cnx_t *cnx = messip_connect( NULL, "ex2/p1", MESSIP_NOTIMEOUT );
     if ( !cnx )
@@ -84,7 +85,7 @@ int server( int argc, char *argv[] ) {
         fprintf( stderr, "Error on receive message 1 on channel '%s'\n", "one" );
         return -1;
     }
-    display( "received (1) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff1, type, ch->remote_id, index1 );
+    display( "Server", "received (1) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff1, type, ch->remote_id, index1 );
     if ( index1 == MESSIP_MSG_DISMISSED ) {
         fprintf( stderr, "Process dismissed!\n" );
         return -1;
@@ -101,7 +102,7 @@ int server( int argc, char *argv[] ) {
         fprintf( stderr, "Error on receive message 2 on channel '%s'\n", "one" );
         return -1;
     }
-    display( "received (2) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff2, type, ch->remote_id, index2 );
+    display( "Server", "received (2) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff2, type, ch->remote_id, index2 );
     if ( index2 == MESSIP_MSG_DISMISSED ) {
         fprintf( stderr, "Process dismissed!\n" );
         return -1;
@@ -109,9 +110,9 @@ int server( int argc, char *argv[] ) {
     assert( !strcmp( rec_buff2, "Hello2" ) );
 
     sleep( 5 );
-    display( "reply to 1st receive\n" );
+    display( "Server", "reply to 1st receive\n" );
     messip_reply( ch, index1, 1234, "Bonjour1", 9, MESSIP_NOTIMEOUT );
-    display( "reply to 2nd receive\n" );
+    display( "Server", "reply to 2nd receive\n" );
     messip_reply( ch, index2, 2345, "Bonjour2", 9, MESSIP_NOTIMEOUT );
 
     /*
@@ -124,7 +125,7 @@ int server( int argc, char *argv[] ) {
         fprintf( stderr, "Error on receive message 3 on channel '%s'\n", "one" );
         return -1;
     }
-    display( "received (3) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff3, type, ch->remote_id, index3 );
+    display( "Server", "received (3) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff3, type, ch->remote_id, index3 );
     if ( index3 == MESSIP_MSG_DISMISSED ) {
         fprintf( stderr, "Process dismissed!\n" );
         return -1;
@@ -141,7 +142,7 @@ int server( int argc, char *argv[] ) {
         fprintf( stderr, "Error on receive message 4 on channel '%s'\n", "one" );
         return -1;
     }
-    display( "received (4) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff4, type, ch->remote_id, index4 );
+    display( "Server", "received (4) %d:'%s' type=%d from id %s index=%d\n", ch->datalen, rec_buff4, type, ch->remote_id, index4 );
     if ( index4 == MESSIP_MSG_DISMISSED ) {
         fprintf( stderr, "Process dismissed!\n" );
         return -1;
@@ -169,17 +170,23 @@ int server( int argc, char *argv[] ) {
  *  @param argv List of the arguments (array)
  *  @return 0 if no error
  */
-int client( int send_int, char *send_str1, char *send_str2, char *rec_str1, char *rec_str2 ) {
+int client( char const *mark, int send_int, char *send_str1, char *send_str2, char *rec_str1, char *rec_str2 ) {
 
     /*--- Connect to one messip server ---*/
-    display( "start process\n" );
+    display( mark, "start process\n" );
     messip_init(  );
     messip_cnx_t *cnx = messip_connect( NULL, "ex2/p2", MESSIP_NOTIMEOUT );
     if ( !cnx )
         cancel( "Unable to find messip server\n" );
 
     /*--- Localize channel 'one' ---*/
-    messip_channel_t *ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
+    messip_channel_t *ch = NULL;
+    for (time_t t0 = time(NULL); time(NULL) - t0 < 10; ) {
+        ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
+        if (ch)
+            break;
+        sleep(1);
+    }
     if ( !ch )
         cancel( "Unable to localize channel '%s'\n", "one" );
 
@@ -192,14 +199,14 @@ int client( int send_int, char *send_str1, char *send_str2, char *rec_str1, char
        send_int, send_str1, 7,
        &answer, rec_buff, sizeof( rec_buff ),
        MESSIP_NOTIMEOUT );
-    display( "send status=%d received back=%d:'%s' answer=%d\n", status, ch->datalen, rec_buff, answer );
+    display( mark, "send status=%d received back=%d:'%s' answer=%d\n", status, ch->datalen, rec_buff, answer );
     assert( !strcmp( rec_buff, rec_str1 ) );
 
     /*--- Send a 2nd message on channel 'one' ---*/
     memset( rec_buff, 0, sizeof( rec_buff ) );
     assert( strlen( send_str2 ) + 1 == 7 );
     status = messip_send( ch, send_int, send_str2, 7, &answer, rec_buff, sizeof( rec_buff ), MESSIP_NOTIMEOUT );
-    display( "send status=%d received back=%d:'%s' answer=%d\n", status, ch->datalen, rec_buff, answer );
+    display( mark, "send status=%d received back=%d:'%s' answer=%d\n", status, ch->datalen, rec_buff, answer );
     assert( !strcmp( rec_buff, rec_str2 ) );
 
     return 0;
@@ -213,7 +220,7 @@ int client( int send_int, char *send_str1, char *send_str2, char *rec_str1, char
  *  @return 0 if no error
  */
 int client1( int argc, char *argv[] ) {
-    return client( 1961, "Hello1", "Hello3", "Bonjour1", "Bonjour3" );
+    return client( "Client1", 1961, "Hello1", "Hello3", "Bonjour1", "Bonjour3" );
 }                               // client1
 
 /**
@@ -224,7 +231,7 @@ int client1( int argc, char *argv[] ) {
  *  @return 0 if no error
  */
 int client2( int argc, char *argv[] ) {
-    return client( 2002, "Hello2", "Hello4", "Bonjour2", "Bonjour4" );
+    return client( "Client2", 2002, "Hello2", "Hello4", "Bonjour2", "Bonjour4" );
 }                               // client2
 
 /**
