@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <getopt.h>
+#include <sys/wait.h>
 
 #include "messip.h"
 
@@ -41,18 +42,20 @@ static int server( int argc, char *argv[] ) {
 	/*
 		Connect to one messip server
 	*/
-	display( "Start process\n" );
+	display( "Server", "Start process\n" );
 	messip_init( );
     messip_cnx_t *cnx = messip_connect( NULL, "ex9/p1", MESSIP_NOTIMEOUT );
-    if ( !cnx ) 
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
 	/*
 		Create channel 'one'
 	*/
 	messip_channel_t *ch = messip_channel_create( cnx, "one", MESSIP_NOTIMEOUT, 0 );
-	if ( !ch ) 
+	if ( !ch ) {
 		cancel( "Unable to create channel '%s'\n", "one" );
+    }
 
 	/*
 		Now wait for one message on this on channel
@@ -65,12 +68,12 @@ static int server( int argc, char *argv[] ) {
 		MESSIP_NOTIMEOUT );
 	if ( index == -1 )
 		cancel( "Error on receive message on channel '%s'\n", "one" );
-	display( "received %d-%d:'%s' type=%d from %s index=%d\n", 
+	display( "Server", "received %d-%d:'%s' type=%d from %s index=%d\n", 
 		ch->datalen, ch->datalenr, rec_buff, type, ch->remote_id, index );
-	display( "received more %d-%d:'%s' index=%d\n", 
+	display( "Server", "received more %d-%d:'%s' index=%d\n", 
 		ch->datalen, ch->datalenr, ch->receive_allmsg[index], index );
 	assert( type == 1 );
-	display( "...waiting 10 seconds before replying to the client...\n" );
+	display( "Server", "...waiting 10 seconds before replying to the client...\n" );
 	delay( 10000 );
 	messip_reply( ch, index, 3005, "Bonjour", 8, MESSIP_NOTIMEOUT );
 
@@ -83,7 +86,7 @@ static int server( int argc, char *argv[] ) {
 		MESSIP_NOTIMEOUT );
 	if ( index == -1 )
 		cancel( "Error on receive message on channel '%s'\n", "one" );
-	display( "received %d-%d:'%s' type=%d from %s index=%d\n", 
+	display( "Server", "received %d-%d:'%s' type=%d from %s index=%d\n", 
 		ch->datalen, ch->datalenr, rec_buff, type, ch->remote_id, index );
 	assert( !strcmp( rec_buff, "Et voila!\n" ) );
 	assert( type == 1961 );
@@ -96,11 +99,11 @@ static int server( int argc, char *argv[] ) {
 	index = messip_receive( ch, &type, rec_buff, sizeof(rec_buff), MESSIP_NOTIMEOUT );
 	if ( index == -1 )
 		cancel( "Error on receive message on channel '%s'\n", "one" );
-	display( "received %d-%d:'%s' type=%d from %s index=%d\n", 
+	display( "Server", "received %d-%d:'%s' type=%d from %s index=%d\n", 
 		ch->datalen, ch->datalenr, rec_buff, type, ch->remote_id, index );
 	assert(index==MESSIP_MSG_DISCONNECT || index==MESSIP_MSG_DISMISSED);
 
-	display( "End process\n" );
+	display( "Server", "End process\n" );
 	return 0;
 }                               // server
 
@@ -126,24 +129,26 @@ static int client( int argc, char *argv[] ) {
 		Connect to one messip server
 	*/
 	messip_init( );
-	display( "start process\n" );
+	display( "Client", "start process\n" );
     messip_cnx_t *cnx = messip_connect( NULL, "ex9/p2", MESSIP_NOTIMEOUT );
-    if ( !cnx ) 
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
 	/*
 		Localize channel 'one'
 	*/
 	messip_channel_t *ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
-	if ( !ch ) 
+	if ( !ch ) {
 		cancel( "Unable to localize channel '%s'\n", "one" );
-	display( "Channel located - remote_id=%s\n", 
+    }
+	display( "Client", "Channel located - remote_id=%s\n", 
 		ch->remote_id );
 
 	/*
 		Send a message on channel 'one'
 	*/
-	display( "sending now a message (len=%d)to the server...\n", sizeof(msg1) );
+	display( "Client", "sending now a message (len=%d)to the server...\n", sizeof(msg1) );
 	char rec_buff[ 80 ];
 	memset( rec_buff, 0, sizeof( rec_buff ) );
     int32_t answer;
@@ -151,10 +156,10 @@ static int client( int argc, char *argv[] ) {
 		1, msg1, sizeof(msg1), 
 		&answer, rec_buff, sizeof( rec_buff ), 
 		MESSIP_NOTIMEOUT );
-	display( "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n", 
+	display( "Client", "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n", 
 		status, ch->datalen, ch->datalenr, rec_buff, answer, ch->remote_id );	
 	assert(answer == 3005);
-	display( "Now waiting 20 seconds...\n" );
+	display( "Client", "Now waiting 20 seconds...\n" );
 	delay( 20000 );
 
 	/*
@@ -163,7 +168,7 @@ static int client( int argc, char *argv[] ) {
 		1961, msg2, sizeof(msg2), 
 		&answer, rec_buff, sizeof( rec_buff ), 
 		MESSIP_NOTIMEOUT );
-	display( "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n", 
+	display( "Client", "send status=%d received back=%d-%d:'%s' answer=%d  id=%s\n", 
 		status, ch->datalen, ch->datalenr, rec_buff, answer, ch->remote_id );	
 	assert(answer == 2003);
 	
