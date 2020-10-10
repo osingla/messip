@@ -141,7 +141,7 @@ static int client( int argc, char *argv[] ) {
 		ch->remote_id,
 		answer, rec_buff );
 
-	sleep( 9999 );
+	sleep( 10 );
 
 	return 0;
 }                               // client

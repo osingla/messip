@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <getopt.h>
+#include <sys/wait.h>
 
 #include "messip.h"
 
@@ -42,16 +43,18 @@ static int server( int argc, char *argv[] ) {
 	/*
 		Connect to one messip server
 	*/
-	display( "Start process\n" );
+	display( "Server", "Start process\n" );
 	messip_init( );
     messip_cnx_t *cnx = messip_connect( NULL, "ex5/p1", MESSIP_NOTIMEOUT );
-    if ( !cnx ) 
+    if ( !cnx ) {
         cancel( "Unable to find messip server\n" );
+    }
 
 	/*--- Create channel 'one' ---*/
 	messip_channel_t *ch = messip_channel_create( cnx, "one", MESSIP_NOTIMEOUT, 0 );
-	if ( !ch ) 
+	if ( !ch ) {
 		cancel( "Unable to create channel '%s'\n", "one" );
+    }
 
 	/*--- Now wait for the 1st message on this on channel ---*/
 	char *rec_buff = malloc( 100 );
@@ -60,7 +63,7 @@ static int server( int argc, char *argv[] ) {
 	int index = messip_receive( ch, &type, rec_buff, 100, MESSIP_NOTIMEOUT );
 	if ( index == -1 )
 		cancel( "Error on receive message on channel '%s'\n", "one" );
-	display( "received '%s' from '%s' type=%X  index=%d\n", 
+	display( "Server", "received '%s' from '%s' type=%X  index=%d\n", 
 		rec_buff, ch->remote_id, 
 		type, index );
 	assert ( !strcmp( rec_buff, "Hello1" ) );
@@ -73,7 +76,7 @@ static int server( int argc, char *argv[] ) {
 	index = messip_receive( ch, &type, rec_buff, 100, MESSIP_NOTIMEOUT );
 	if ( index == -1 )
 	    cancel( "Error on receive message on channel '%s'\n", "one" );
-	display( "received '%s' from '%s' index=%d\n", 
+	display( "Server", "received '%s' from '%s' index=%d\n", 
 		rec_buff, ch->remote_id, index );
 	assert ( !strcmp( rec_buff, "Hello2" ) );
 	messip_reply( ch, index, 0x302, "Bonjour2", 9, MESSIP_NOTIMEOUT );
@@ -92,12 +95,12 @@ static int server( int argc, char *argv[] ) {
 			break;
         if ( type != cnt++ )
             cancel( "OOPS! type=%X cnt=%X\n", type, cnt-1 );
-//		display( "%d: received '%s' from '%s' index=%d\n", 
+//		display( "Server", "%d: received '%s' from '%s' index=%d\n", 
 //			cnt, rec_buff, ch->remote_id, index );
 		if (index != MESSIP_MSG_NOREPLY)
 			messip_reply( ch, index, cnt, reply_buff, reply_sz, MESSIP_NOTIMEOUT );
 	}							// for (;;)
-	display( "Received %ld msg\n", cnt );
+	display( "Server", "Received %ld msg\n", cnt );
 
 	return 0;
 }                               // server
@@ -165,7 +168,7 @@ static int client( int argc, char *argv[] ) {
 
 	/*--- Connect to one messip server ---*/
 	messip_init( );
-	display( "start process\n" );
+	display( "Client", "start process\n" );
     messip_cnx_t *cnx = messip_connect( NULL, "ex5/p2", MESSIP_NOTIMEOUT );
     if ( !cnx ) 
         cancel( "Unable to find messip server\n" );
@@ -174,7 +177,7 @@ static int client( int argc, char *argv[] ) {
 	messip_channel_t *ch = messip_channel_connect( cnx, "one", MESSIP_NOTIMEOUT );
 	if ( !ch ) 
 		cancel( "Unable to localize channel '%s'\n", "one" );
-	display( "Channel located - remote_id=%s\n", 
+	display( "Client", "Channel located - remote_id=%s\n", 
 		ch->remote_id );
 
 	/*--- Send a 1st message on channel 'one' ---*/
@@ -184,7 +187,7 @@ static int client( int argc, char *argv[] ) {
 		send_sz + (reply_sz << 16), "Hello1", 7, 
 		&answer, reply_buff, 100, 
 		MESSIP_NOTIMEOUT );
-	display( "send status=%d received back='%s'  remote_id=%s\n", 
+	display( "Client", "send status=%d received back='%s'  remote_id=%s\n", 
 		status, reply_buff, ch->remote_id );	
 
 	/*--- Send a 2nd message on channel 'one' ---*/
@@ -193,7 +196,7 @@ static int client( int argc, char *argv[] ) {
 		0, "Hello2", 7, 
 		&answer, reply_buff, 100, 
 		MESSIP_NOTIMEOUT );
-	display( "send status=%d received back='%s'  remote_id=%s\n", 
+	display( "Client", "send status=%d received back='%s'  remote_id=%s\n", 
 		status, reply_buff, ch->remote_id );	
 
 	/*--- Send blocking messages for 10 seconds ---*/
@@ -222,7 +225,7 @@ static int client( int argc, char *argv[] ) {
 		}                       // while
 	}							// else
 
-	display( "sent %d msg, %d msg/sec\n", 
+	display( "Client", "sent %d msg, %d msg/sec\n", 
         cnt, cnt/duration );
 	status = messip_send( ch, 
 		-1, NULL, 0, 
