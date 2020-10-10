@@ -44,7 +44,20 @@ static int is_logg = 1;
  */
 unsigned long long int rdtsc( void ) {
     unsigned long long int x;
+#if defined(__x86_64__)
     __asm__ volatile ( ".byte 0x0f, 0x31":"=A" ( x ) );
+#else
+    volatile unsigned cc;
+    static int init = 0;
+    if(!init) {
+      __asm__ __volatile__ ("mcr p15, 0, %0, c9, c12, 2" :: "r"(1<<31)); /* stop the cc */
+      __asm__ __volatile__ ("mcr p15, 0, %0, c9, c12, 0" :: "r"(5));     /* initialize */
+      __asm__ __volatile__ ("mcr p15, 0, %0, c9, c12, 1" :: "r"(1<<31)); /* start the cc */
+      init = 1;
+    }
+    __asm__ __volatile__ ("mrc p15, 0, %0, c9, c13, 0" : "=r"(cc));
+    return cc;
+#endif
 //    x = 0;
     return x;
 }								// rdtsc
@@ -97,7 +110,7 @@ static int file_logg( FILE * output, logg_type_t type, char *text ) {
             t1 = t0;
         }
         else {
-            char temp[10];
+            char temp[40];
             lseek( fd, 0, SEEK_SET );
             read( fd, temp, 8 + 1 + 18 + 1 );
             seqnb = atoi( temp ) + 1;

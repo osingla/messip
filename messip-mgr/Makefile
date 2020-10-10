@@ -1,3 +1,4 @@
 
 all clean :
-	@make -C $(CONFIG_NAME) $@
+	@make -C Debug $@
+	@make -C Release $@

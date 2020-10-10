@@ -1,0 +1,5 @@
+*.o
+*.d
+*.so
+messip-mgr
+messip-example-*
