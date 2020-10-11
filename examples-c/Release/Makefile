@@ -8,3 +8,4 @@ all clean:
 	$(MAKE) DEBUG=NO -f ../Src/example-7.mk $@
 	$(MAKE) DEBUG=NO -f ../Src/example-8.mk $@
 	$(MAKE) DEBUG=NO -f ../Src/example-9.mk $@
+	$(MAKE) DEBUG=NO -f ../Src/example-10.mk $@

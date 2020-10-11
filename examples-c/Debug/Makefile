@@ -7,3 +7,5 @@ all clean:
 	$(MAKE) DEBUG=YES -f ../Src/example-6.mk $@
 	$(MAKE) DEBUG=YES -f ../Src/example-7.mk $@
 	$(MAKE) DEBUG=YES -f ../Src/example-8.mk $@
+	$(MAKE) DEBUG=YES -f ../Src/example-9.mk $@
+	$(MAKE) DEBUG=YES -f ../Src/example-10.mk $@

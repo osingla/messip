@@ -8,7 +8,7 @@ vpath %.c   ../Src/:./
 vpath %.h   ../Src/:./
 vpath %.o   ./
 
-CFLAGS = -Wall -std=gnu99 
+CFLAGS = -Wall
 CFLAGS += -I ../Src
 
 %.d: %.c
