@@ -24,6 +24,14 @@
  * 
  **/
 
+#include <unistd.h>
+
+#include <string>
+
+#include <messip++.h>
+
+Messip messip;
+
 /**
  *  Main function
  * 
@@ -32,5 +40,8 @@
  *  @return 0 if no error
  */
 int main( int argc, char *argv[] ) {
+    std::string cnxname = "hello";
+    messip.connect(cnxname);
+    sleep(9999);
     return 0;
 }                               // main

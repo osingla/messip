@@ -10,6 +10,8 @@
 #ifndef MESSIPPP_H_
 #define MESSIPPP_H_
 
+class MessipCnx;
+
 class Messip {
 
 public:
@@ -17,10 +19,13 @@ public:
     Messip();
     ~Messip();
     
-//    int connect(
-//    char *mgr_ref, messip_id_t id, int msec_timeout
+    int connect(std::string msg_ref, std::string id, int msec_timeout=-1);
+    int connect(std::string id, int msec_timeout=-1);
 
 private:
+
+    friend class MessipCnx;
+    class MessipCnx *messip_cnx;
 
 };
 

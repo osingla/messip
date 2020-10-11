@@ -111,7 +111,7 @@ extern "C" {
 
     void messip_init( void );
 
-    messip_cnx_t *messip_connect( char *mgr_ref, messip_id_t id, int msec_timeout );
+    messip_cnx_t *messip_connect( char *mgr_ref, messip_id_t const id, int msec_timeout );
 
     messip_channel_t *messip_channel_create( messip_cnx_t * cnx,
        const char *name, int msec_timeout, int32_t maxnb_msg_buffered );

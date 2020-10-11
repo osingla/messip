@@ -8,7 +8,7 @@ vpath %.cpp   ../Src/:./
 vpath %.h   ../Src/:./
 vpath %.o   ./
 
-CPPFLAGS = -Wall -std=gnu99 
+CPPFLAGS = -Wall
 CPPFLAGS += -I ../Src
 
 %.d: %.cpp

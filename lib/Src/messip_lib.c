@@ -227,7 +227,7 @@ int messip_select( int fd, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
  * 
  * @see messip_disconnect(), messip_channel_create(), messip_channel_disconnect()
  */
-messip_cnx_t *messip_connect( char *mgr_ref, messip_id_t id, int msec_timeout ) {
+messip_cnx_t *messip_connect( char *mgr_ref, messip_id_t const id, int msec_timeout ) {
 
     /*--- NULL and /etc/messip does not exist ? ---*/
     int port = MESSIP_DEFAULT_PORT;
@@ -1957,5 +1957,5 @@ int messip_log( unsigned level, const char *fmt, ... ) {
     int len = vprintf( fmt, ap );
     va_end( ap );
     fflush( stdout );
-     return len;
+    return len;
 }                               // messip_log
