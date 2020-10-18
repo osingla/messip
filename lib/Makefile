@@ -1,4 +1,4 @@
 
 all clean :
-	@make -C Debug $@
-	@make -C Release $@
+	@make --no-print-directory -C Debug $@
+	@make --no-print-directory -C Release $@

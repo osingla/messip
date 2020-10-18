@@ -22,6 +22,11 @@ public:
     int connect(std::string msg_ref, std::string id, int msec_timeout=-1);
     int connect(std::string id, int msec_timeout=-1);
 
+/*
+    messip_channel_t *messip_channel_create( messip_cnx_t * cnx,
+       const char *name, int msec_timeout, int32_t maxnb_msg_buffered );
+*/
+
 private:
 
     friend class MessipCnx;

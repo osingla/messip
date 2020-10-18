@@ -1,2 +1,2 @@
 all clean:
-	$(MAKE) DEBUG=YES -f ../Src/mgr.mk $@
+	@$(MAKE) DEBUG=YES -f ../Src/mgr.mk $@

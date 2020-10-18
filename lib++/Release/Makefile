@@ -1,2 +1,2 @@
 all clean:
-	$(MAKE) DEBUG=NO -f ../Src/lib++.mk $@
+	@$(MAKE) DEBUG=NO -f ../Src/lib++.mk $@
