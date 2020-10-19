@@ -1,20 +1,85 @@
 #include <stdio.h>
+
+#include "../lib/Src/messip.h"
+
 #include <Python.h>
 
-// Module method definitions
-static PyObject* hello_world(PyObject *self, PyObject *args) {
-    printf("Hello, world!\n");
-    Py_RETURN_NONE;
-}
+static messip_cnx_t *cnx = NULL;
 
-static PyObject* hello(PyObject *self, PyObject *args) {
-    const char* name;
-    if (!PyArg_ParseTuple(args, "s", &name)) {
+static PyObject* m_connect(PyObject *self, PyObject *args) {
+    const char *mgr_ref;
+    if (!PyArg_ParseTuple(args, "s", &mgr_ref)) {
         return NULL;
     }
 
-    printf("Hello, %s!\n", name);
+    printf("mgr_ref=%s\n", mgr_ref);
+
+    // Connect to one messip server
+    messip_init();
+    cnx = messip_connect( NULL, mgr_ref, MESSIP_NOTIMEOUT );
+    if ( !cnx ) {
+        printf( "Unable to find messip manager\n" );
+    }
+
     Py_RETURN_NONE;
+}
+
+static PyObject* m_channel_create(PyObject *self, PyObject *args) {
+    const char *channel_name;
+    if (!PyArg_ParseTuple(args, "s", &channel_name)) {
+        return NULL;
+    }
+
+    printf("channel_name=%s\n", channel_name);
+
+    // Create the channel
+    messip_channel_t *ch = messip_channel_create(cnx, channel_name, MESSIP_NOTIMEOUT, 0);
+    if ( !ch ) {
+        printf( "Unable to create channel\n" );
+    }
+
+    return Py_BuildValue("i", ch);
+}
+
+static PyObject* m_channel_connect(PyObject *self, PyObject *args) {
+    const char *channel_name;
+    if (!PyArg_ParseTuple(args, "s", &channel_name)) {
+        return NULL;
+    }
+
+    printf("channel_name=%s\n", channel_name);
+
+    // Connect to the channel
+    messip_channel_t *ch = messip_channel_connect(cnx, channel_name, MESSIP_NOTIMEOUT);
+    if ( !ch ) {
+        printf( "Unable to connect to the channel\n" );
+    }
+
+    return Py_BuildValue("i", ch);
+}
+
+static PyObject* m_send(PyObject *self, PyObject *args) {
+
+    const int chn;
+    messip_channel_t *ch;
+    char send_buffer[] = "Hello";
+    int answer;
+    char reply_buffer[50];
+
+    if (!PyArg_ParseTuple(args, "i", &chn)) {
+        return NULL;
+    }
+
+    printf("chn=%d\n", chn);
+    ch = (messip_channel_t *)chn;
+
+    // Semd message overthe channel
+    int s = messip_send(ch, 123, send_buffer, 5, &answer, reply_buffer, sizeof(reply_buffer), MESSIP_NOTIMEOUT);
+    if ( !ch ) {
+        printf( "Unable to connect to the channel\n" );
+    }
+
+    return Py_BuildValue("i", s);
 }
 
 // Method definition object for this extension, these argumens mean:
@@ -26,12 +91,20 @@ static PyObject* hello(PyObject *self, PyObject *args) {
 // ml_doc:  Contents of this method's docstring
 static PyMethodDef messip_methods[] = { 
     {   
-        "hello_world", hello_world, METH_NOARGS,
-        "Print 'hello world' from a method defined in a C extension."
+        "connect", m_connect, METH_VARARGS,
+        "Connect to the messip manager."
     },  
     {   
-        "hello", hello, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "channel_create", m_channel_create, METH_VARARGS,
+        "Create a channel."
+    },  
+    {   
+        "channel_connect", m_channel_connect, METH_VARARGS,
+        "Connect to a channel."
+    },  
+    {   
+        "send", m_send, METH_VARARGS,
+        "Send a message over a channel."
     },  
     {NULL, NULL, 0, NULL}
 };
@@ -42,7 +115,7 @@ static PyMethodDef messip_methods[] = {
 static struct PyModuleDef messip_definition = { 
     PyModuleDef_HEAD_INIT,
     "messip",
-    "A Python module that prints 'hello world' from C code.",
+    "A Python module which implements Message-Passing.",
     -1, 
     messip_methods
 };
