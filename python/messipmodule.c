@@ -5,6 +5,8 @@
 #include <Python.h>
 
 static messip_cnx_t *cnx = NULL;
+static PyObject *builtins = NULL;
+static PyObject *eval = NULL;
 
 static PyObject* m_connect(PyObject *self, PyObject *args) {
     const char *mgr_ref;
@@ -20,6 +22,9 @@ static PyObject* m_connect(PyObject *self, PyObject *args) {
     if ( !cnx ) {
         printf( "Unable to find messip manager\n" );
     }
+
+    builtins = PyImport_ImportModule("builtins");
+    eval = PyObject_GetAttrString(builtins, "eval");
 
     Py_RETURN_NONE;
 }
@@ -65,6 +70,40 @@ static PyObject* m_send(PyObject *self, PyObject *args) {
     char send_buffer[] = "Hello";
     int answer;
     char reply_buffer[50];
+    PyObject *pobj;
+
+    if (!PyArg_ParseTuple(args, "iO", &chn, &pobj)) {
+        return NULL;
+    }
+    printf("chn=%d\n", chn);
+    ch = (messip_channel_t *)chn;
+    printf("pobj=%p\n", pobj);
+    Py_ssize_t len = PyObject_Length(pobj);
+    printf("len=%d\n", (int)len);
+    Py_ssize_t size = PyObject_Size(pobj);
+    printf("size=%d\n", (int)size);
+
+    PyObject* repr = PyObject_Repr(pobj);
+    PyObject* str = PyUnicode_AsEncodedString(repr, "utf-8", "~E~");
+    const char *bytes = PyBytes_AS_STRING(str);
+    #printf("REPR: %s\n", bytes);
+    
+    // Send message over the channel
+    int s = messip_send(ch, 123, bytes, strlen(bytes)+1, &answer, reply_buffer, sizeof(reply_buffer), MESSIP_NOTIMEOUT);
+
+    Py_XDECREF(repr);
+    Py_XDECREF(str);
+
+    return Py_BuildValue("i", s);
+}
+
+static PyObject* m_receive(PyObject *self, PyObject *args) {
+
+    const int chn;
+    messip_channel_t *ch;
+    char recv_buffer[200];
+    int type;
+    PyObject *pobj;
 
     if (!PyArg_ParseTuple(args, "i", &chn)) {
         return NULL;
@@ -73,13 +112,13 @@ static PyObject* m_send(PyObject *self, PyObject *args) {
     printf("chn=%d\n", chn);
     ch = (messip_channel_t *)chn;
 
-    // Semd message overthe channel
-    int s = messip_send(ch, 123, send_buffer, 5, &answer, reply_buffer, sizeof(reply_buffer), MESSIP_NOTIMEOUT);
-    if ( !ch ) {
-        printf( "Unable to connect to the channel\n" );
-    }
+    // Receive message over the channel
+    int s = messip_receive(ch, &type, recv_buffer, sizeof(recv_buffer), MESSIP_NOTIMEOUT);
+    printf("s = %d\n", s);
 
-    return Py_BuildValue("i", s);
+    PyObject *rargs = Py_BuildValue("(s)", recv_buffer);
+    PyObject *result = PyObject_Call(eval, rargs, NULL);
+    return result;
 }
 
 // Method definition object for this extension, these argumens mean:
@@ -105,6 +144,10 @@ static PyMethodDef messip_methods[] = {
     {   
         "send", m_send, METH_VARARGS,
         "Send a message over a channel."
+    },  
+    {   
+        "receive", m_receive, METH_VARARGS,
+        "Receive a message over a channel."
     },  
     {NULL, NULL, 0, NULL}
 };
